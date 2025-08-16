@@ -9,8 +9,14 @@ import {
   getItemsFromServer,
   markItemCompletedOnServer,
 } from "./services/itemsService";
-function App() {
-  const [todoItems, setTodoItems] = useState([]);
+
+ export default function App() {//defines a React component called app
+
+const [todoItems, setTodoItems] = useState([]);//todoItems is the state variable 
+
+//State is a way to store and manage data that can change over time in your component.
+// It helps your component remember information
+//When state changes, the component automatically re-renders to show the updated data
 
   useEffect(() => {
     getItemsFromServer().then((initialItems) => {
@@ -52,7 +58,7 @@ function App() {
     return a.completed ? 1 : -1;
   });
 
-   return (
+   return (//what to render on the screen
     <div className="min-h-screen bg-blue py-12 px-4">
   <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
@@ -69,8 +75,5 @@ function App() {
     </div>
   </div>
 </div>
-
   );
 }
-
-export default App;

@@ -16,6 +16,9 @@ const app = express();//creates an Express application
 app.use(express.urlencoded({ extended: true }));//used to parse incoming form data
 app.use(express.json());// parse incoming JSON data from the request body
 app.use(cors());
+app.use(cors({
+  origin: 'https://todolist-chi-woad.vercel.app'
+}));
 
 app.use("/api/todo", todoItemsRouter);
 app.use(errors.pageNotFound);
