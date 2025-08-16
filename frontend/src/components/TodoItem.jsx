@@ -108,13 +108,13 @@ function TodoItem({
             onClick={() => setIsEditing(true)}
             className="ml-3 text-blue-600 dark:text-blue-400 hover:underline text-sm"
           >
-            Edit
+            EDIT
           </button>
           <button
             onClick={() => onDeleteClick(id)}
             className="ml-2 text-red-500 dark:text-red-400 hover:underline text-sm"
           >
-            Delete
+            DELETE
           </button>
         </>
       )}
