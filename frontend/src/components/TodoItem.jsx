@@ -27,73 +27,87 @@ function TodoItem({
     setIsEditing(false);
   };
 
- return (
+return (
     <div
-      className={`flex items-center bg-white shadow rounded-md p-3 mb-3 ${
+      className={`flex items-center justify-between rounded-xl shadow-sm mb-4 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 ${
         completed ? "opacity-70" : ""
       }`}
     >
-      <input
-        type="checkbox"
-        checked={completed}
-        onChange={() => onToggleComplete(id, completed)}
-        className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-400 cursor-pointer"
-      />
-
       {isEditing ? (
-        <div className="flex flex-1 items-center gap-3 ml-3">
+        <div className="flex-1 flex flex-col sm:flex-row gap-2">
           <input
             type="text"
             value={editedName}
             onChange={(e) => setEditedName(e.target.value)}
-            className="flex-1 rounded-md border border-gray-300 px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="flex-1 rounded-lg border px-3 py-1 bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-700"
           />
           <input
             type="date"
             value={editedDate || ""}
             onChange={(e) => setEditedDate(e.target.value)}
-            className="rounded-md border border-gray-300 px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="rounded-lg border px-3 py-1 bg-gray-50 dark:bg-gray-900 border-gray-300 dark:border-gray-700"
           />
           <button
             onClick={handleSave}
-            className="bg-green-500 text-white px-4 py-1 rounded-md hover:bg-green-600 transition"
+            className="text-green-600 hover:text-green-800 px-2 font-semibold"
           >
             Save
           </button>
           <button
             onClick={() => setIsEditing(false)}
-            className="bg-gray-300 px-3 py-1 rounded-md hover:bg-gray-400 transition"
+            className="text-gray-400 hover:text-gray-600 px-2 font-semibold"
           >
             Cancel
           </button>
         </div>
       ) : (
         <>
-          <span
-            className={`flex-1 ml-3 text-gray-900 ${
-              completed ? "line-through text-gray-400" : ""
-            }`}
-          >
-            {todoName}
-          </span>
-          {todoDate && (
-            <span
-              className={`mr-3 text-sm ${
-                completed ? "line-through text-gray-400" : "text-gray-500"
-              }`}
-            >
-              ({formatDate(todoDate)})
+          <div className="flex items-center flex-1 gap-3">
+            {/* Check input */}
+            <input
+              type="checkbox"
+              checked={completed}
+              onChange={() => onToggleComplete(id, completed)}
+              className="form-checkbox w-5 h-5 rounded-full accent-blue-600"
+            />
+            {/* Task text */}
+            <span className={`flex-1 font-medium ${completedTextClass}`}>
+              {todoName}
             </span>
-          )}
+          </div>
+          {/* Right date side */}
+          <div className="flex items-center min-w-[120px]">
+            <span className="inline-flex items-center gap-1 text-gray-400 text-sm">
+              <svg width="16" height="16" fill="none" className="mr-1">
+                <rect
+                  x="4"
+                  y="7"
+                  width="8"
+                  height="5"
+                  rx="2"
+                  fill="currentColor"
+                />
+                <rect
+                  x="4"
+                  y="3"
+                  width="8"
+                  height="2"
+                  rx="1"
+                  fill="currentColor"
+                />
+              </svg>
+              {todoDate ? formatDate(todoDate) : "Due today"}
+            </span>
+          </div>
           <button
             onClick={() => setIsEditing(true)}
-            className="text-blue-600 hover:underline px-3"
+            className="ml-3 text-blue-600 dark:text-blue-400 hover:underline text-sm"
           >
             Edit
           </button>
           <button
             onClick={() => onDeleteClick(id)}
-            className="text-red-600 hover:underline px-3"
+            className="ml-2 text-red-500 dark:text-red-400 hover:underline text-sm"
           >
             Delete
           </button>

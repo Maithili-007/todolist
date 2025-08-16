@@ -20,25 +20,26 @@ function AddTodo({ onNewItem }) {
   };
 
    return (
-    <div className="flex gap-3 mb-7">
+    <div className="flex items-center gap-4 mb-7 px-2">
       <input
         type="text"
-        placeholder="Enter task..."
+        placeholder="Add Item"
         value={todoName}
         onChange={handleNameChange}
-        className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+        className="flex-1 rounded-lg px-4 py-2 border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
       <input
         type="date"
         value={dueDate}
         onChange={handleDateChange}
-        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+        className="rounded-lg px-3 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200"
       />
       <button
         onClick={handleAddButtonClicked}
-        className="bg-blue-600 text-white rounded-md px-5 py-2 font-semibold shadow-md hover:bg-blue-700 transition"
+        className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-blue-700"
+        aria-label="Add"
       >
-        Add
+        <span className="text-xl">+</span>
       </button>
     </div>
   );
