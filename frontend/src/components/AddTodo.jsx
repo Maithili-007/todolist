@@ -19,16 +19,27 @@ function AddTodo({ onNewItem }) {
     setTodoName("");
   };
 
-  return (
-    <div className="add-todo">
+   return (
+    <div className="flex gap-3 mb-7">
       <input
         type="text"
         placeholder="Enter task..."
         value={todoName}
         onChange={handleNameChange}
+        className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
       />
-      <input type="date" value={dueDate} onChange={handleDateChange} />
-      <button onClick={handleAddButtonClicked}>Add</button>
+      <input
+        type="date"
+        value={dueDate}
+        onChange={handleDateChange}
+        className="rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white"
+      />
+      <button
+        onClick={handleAddButtonClicked}
+        className="bg-blue-600 text-white rounded-md px-5 py-2 font-semibold shadow-md hover:bg-blue-700 transition"
+      >
+        Add
+      </button>
     </div>
   );
 }
