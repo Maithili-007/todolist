@@ -1,5 +1,5 @@
 const express = require("express");
-const todoItemsRouter = express.Router();
+const todoItemsRouter = express.Router();//creates a mini Express router
 
 // Local Module
 const todoItemsController = require("../controllers/todoItemsController");

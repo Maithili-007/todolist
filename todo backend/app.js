@@ -9,20 +9,18 @@ const DB_PATH = "mongodb+srv://root:root@completecoding.pxuvpxm.mongodb.net/todo
 
 //Local Module
 const todoItemsRouter = require("./routes/todoItemsRouter")
-const errorsController = require("./controllers/errors");
+const errors = require("./controllers/errors");
 
-const app = express();
+const app = express();//creates an Express application
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));//used to parse incoming form data
+app.use(express.json());// parse incoming JSON data from the request body
 app.use(cors());
 
 app.use("/api/todo", todoItemsRouter);
-
-app.use(errorsController.pageNotFound);
+app.use(errors.pageNotFound);
 
 const PORT = 3000;
-
 mongoose.connect(DB_PATH).then(() => {
   console.log('Connected to Mongo');
   app.listen(PORT, () => {
