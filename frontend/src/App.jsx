@@ -60,19 +60,21 @@ export default function App() {
   });
 
   return (
-    <div className="app">
-      <AppName />
-      <AddTodo onNewItem={handleNewItem} />
-      {sortedItems.length === 0 ? (
-        <WelcomeMessage />
-      ) : (
-        <TodoItems
-          todoItems={sortedItems}
-          onDeleteClick={handleDeleteItem}
-          onToggleComplete={handleToggleComplete}
-          onEditItem={handleEditItem}
-        />
-      )}
+    <div className="min-h-screen w-full bg-gray-50 dark:bg-gray-900 flex justify-center items-center">
+      <div className="w-full max-w-md px-2 py-6">
+        <AppName />
+        <AddTodo onNewItem={handleNewItem} />
+        {todoItems.length === 0 ? (
+          <WelcomeMessage />
+        ) : (
+          <TodoItems
+            todoItems={todoItems}
+            onDeleteClick={handleDeleteItem}
+            onToggleComplete={handleToggleComplete}
+            onEditItem={handleEditItem}
+          />
+        )}
+      </div>
     </div>
   );
 }

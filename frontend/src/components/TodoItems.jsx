@@ -9,10 +9,12 @@ const TodoItems = ({
   const pendingItems = todoItems.filter((item) => !item.completed);
   const completedItems = todoItems.filter((item) => item.completed);
 
-return (
+  return (
     <div className="px-2">
       <div>
-        <h3 className="uppercase tracking-wide text-xs font-semibold mb-3 text-gray-500 dark:text-gray-400">To Do</h3>
+        <h3 className="uppercase tracking-wide text-xs font-semibold mb-3 text-gray-500 dark:text-gray-400">
+          To Do
+        </h3>
         {pendingItems.length > 0 ? (
           pendingItems.map((item) => (
             <TodoItem
@@ -31,7 +33,9 @@ return (
         )}
       </div>
       <div>
-        <h3 className="uppercase tracking-wide text-xs font-semibold mt-6 mb-3 text-gray-500 dark:text-gray-400">Completed</h3>
+        <h3 className="uppercase tracking-wide text-xs font-semibold mt-6 mb-3 text-gray-500 dark:text-gray-400">
+          Completed
+        </h3>
         {completedItems.length > 0 ? (
           completedItems.map((item) => (
             <TodoItem

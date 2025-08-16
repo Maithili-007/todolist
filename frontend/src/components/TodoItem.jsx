@@ -14,7 +14,7 @@ function TodoItem({
   const [editedDate, setEditedDate] = useState(todoDate);
 
   const formatDate = (dateString) => {
-    if (!dateString) return "";
+    if (!dateString) return "Due today";
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
@@ -23,11 +23,12 @@ function TodoItem({
   };
 
   const handleSave = () => {
+    if (!editedName.trim()) return;
     onEditItem(id, editedName, editedDate);
     setIsEditing(false);
   };
 
-return (
+  return (
     <div
       className={`flex items-center justify-between rounded-xl shadow-sm mb-4 px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 ${
         completed ? "opacity-70" : ""
@@ -71,33 +72,37 @@ return (
               className="form-checkbox w-5 h-5 rounded-full accent-blue-600"
             />
             {/* Task text */}
-            <span className={`flex-1 font-medium ${completedTextClass}`}>
+            <span
+              className={`flex-1 font-medium ${
+                completed
+                  ? "text-green-600 line-through"
+                  : "text-gray-800 dark:text-gray-200"
+              }`}
+            >
               {todoName}
             </span>
           </div>
           {/* Right date side */}
-          <div className="flex items-center min-w-[120px]">
-            <span className="inline-flex items-center gap-1 text-gray-400 text-sm">
-              <svg width="16" height="16" fill="none" className="mr-1">
-                <rect
-                  x="4"
-                  y="7"
-                  width="8"
-                  height="5"
-                  rx="2"
-                  fill="currentColor"
-                />
-                <rect
-                  x="4"
-                  y="3"
-                  width="8"
-                  height="2"
-                  rx="1"
-                  fill="currentColor"
-                />
-              </svg>
-              {todoDate ? formatDate(todoDate) : "Due today"}
-            </span>
+          <div className="flex items-center min-w-[120px] text-sm gap-1 text-gray-400">
+            <svg width="16" height="16" fill="none">
+              <rect
+                x="4"
+                y="7"
+                width="8"
+                height="5"
+                rx="2"
+                fill="currentColor"
+              />
+              <rect
+                x="4"
+                y="3"
+                width="8"
+                height="2"
+                rx="1"
+                fill="currentColor"
+              />
+            </svg>
+            {formatDate(todoDate)}
           </div>
           <button
             onClick={() => setIsEditing(true)}

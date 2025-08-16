@@ -1,8 +1,10 @@
 function AppName() {
   return (
-    <h1 className="text-3xl font-bold text-center text-indigo-600 mb-6">
-      TODO App
-    </h1>
+    <div className="mb-7 px-2">
+      <h1 className="text-2xl font-semibold text-center text-gray-700 dark:text-gray-100 tracking-wide">
+        To Do List
+      </h1>
+    </div>
   );
 }
 

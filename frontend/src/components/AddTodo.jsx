@@ -4,13 +4,8 @@ function AddTodo({ onNewItem }) {
   const [todoName, setTodoName] = useState("");
   const [dueDate, setDueDate] = useState("");
 
-  const handleNameChange = (event) => {
-    setTodoName(event.target.value);
-  };
-
-  const handleDateChange = (event) => {
-    setDueDate(event.target.value);
-  };
+  const handleNameChange = (e) => setTodoName(e.target.value);
+  const handleDateChange = (e) => setDueDate(e.target.value);
 
   const handleAddButtonClicked = () => {
     if (!todoName.trim()) return;
@@ -19,7 +14,7 @@ function AddTodo({ onNewItem }) {
     setTodoName("");
   };
 
-   return (
+  return (
     <div className="flex items-center gap-4 mb-7 px-2">
       <input
         type="text"
@@ -39,7 +34,7 @@ function AddTodo({ onNewItem }) {
         className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-blue-700"
         aria-label="Add"
       >
-        <span className="text-xl">+</span>
+        <span className="text-xl font-bold">+</span>
       </button>
     </div>
   );
