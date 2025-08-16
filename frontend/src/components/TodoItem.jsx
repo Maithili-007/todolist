@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function TodoItem({
   id,
   todoName,
@@ -5,7 +7,12 @@ function TodoItem({
   completed,
   onDeleteClick,
   onToggleComplete,
-}){
+  onEditItem,
+}) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedName, setEditedName] = useState(todoName);
+  const [editedDate, setEditedDate] = useState(todoDate);
+
   const formatDate = (dateString) => {
     if (!dateString) return "";
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -15,35 +22,48 @@ function TodoItem({
     });
   };
 
+  const handleSave = () => {
+    onEditItem(id, editedName, editedDate);
+    setIsEditing(false);
+  };
+
   return (
-    <div
-      className={`flex flex-col sm:flex-row items-center justify-between p-4 mb-3 rounded-lg border ${
-        completed ? "bg-gray-50 border-gray-200" : "bg-white border-gray-200"
-      } shadow-sm hover:shadow-md transition-shadow`} >
-      <div className="flex items-center mb-2 sm:mb-0 sm:flex-1">
-        <input
-          type="checkbox"
-          checked={completed}
-          onChange={() => onToggleComplete(id)}
-          className="w-5 h-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mr-3" />
-        <span
-          className={`text-gray-700 font-medium ${
-            completed ? "line-through text-gray-500" : "" }`}>
-          {todoName}
-        </span>
-      </div>
-      <div className="text-gray-500 mb-2 sm:mb-0 sm:w-1/3">
-        {formatDate(todoDate)}
-      </div>
-      <div>
-        <button
-          type="button"
-          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-colors"
-          onClick={() => onDeleteClick(id)} >
-          Delete
-        </button>
-      </div>
+    <div className="todo-item">
+      <input
+        type="checkbox"
+        checked={completed}
+        onChange={() => onToggleComplete(id, completed)}
+      />
+
+      {isEditing ? (
+        <>
+          <input
+            type="text"
+            value={editedName}
+            onChange={(e) => setEditedName(e.target.value)}
+          />
+          <input
+            type="date"
+            value={editedDate || ""}
+            onChange={(e) => setEditedDate(e.target.value)}
+          />
+          <button onClick={handleSave}>Save</button>
+          <button onClick={() => setIsEditing(false)}>Cancel</button>
+        </>
+      ) : (
+        <>
+          <span
+            style={{ textDecoration: completed ? "line-through" : "none" }}
+          >
+            {todoName}
+          </span>
+          {todoDate && <span> ({formatDate(todoDate)})</span>}
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <button onClick={() => onDeleteClick(id)}>Delete</button>
+        </>
+      )}
     </div>
   );
 }
+
 export default TodoItem;

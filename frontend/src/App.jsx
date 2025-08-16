@@ -7,16 +7,12 @@ import {
   addItemToServer,
   deleteItemFromServer,
   getItemsFromServer,
-  markItemCompletedOnServer,
+  toggleItemCompletionOnServer,
+  updateItemOnServer,
 } from "./services/itemsService";
 
- export default function App() {//defines a React component called app
-
-const [todoItems, setTodoItems] = useState([]);//todoItems is the state variable 
-
-//State is a way to store and manage data that can change over time in your component.
-// It helps your component remember information
-//When state changes, the component automatically re-renders to show the updated data
+export default function App() {
+  const [todoItems, setTodoItems] = useState([]);
 
   useEffect(() => {
     getItemsFromServer().then((initialItems) => {
@@ -29,28 +25,33 @@ const [todoItems, setTodoItems] = useState([]);//todoItems is the state variable
   }, []);
 
   const handleNewItem = async (itemName, itemDueDate) => {
-    console.log(`New Item Added: ${itemName} Date:${itemDueDate}`);
     const item = await addItemToServer(itemName, itemDueDate);
     const newItem = { ...item, completed: false };
-    const newTodoItems = [...todoItems, newItem];
-    setTodoItems(newTodoItems);
+    setTodoItems([...todoItems, newItem]);
   };
 
-   const handleToggleComplete = async (id) => {
-    await markItemCompletedOnServer(id);
-    const updatedItems = todoItems.map((item) => {
-      if (item.id === id) {
-        return { ...item, completed: true };
-      }
-      return item;
-    });
+  const handleToggleComplete = async (id, currentlyCompleted) => {
+    const updatedItem = await toggleItemCompletionOnServer(
+      id,
+      !currentlyCompleted
+    );
+    const updatedItems = todoItems.map((item) =>
+      item._id === id ? { ...item, completed: updatedItem.completed } : item
+    );
     setTodoItems(updatedItems);
   };
 
-   const handleDeleteItem = async (id) => {
+  const handleDeleteItem = async (id) => {
     const deletedId = await deleteItemFromServer(id);
-    const newTodoItems = todoItems.filter((item) => item.id !== deletedId);
-    setTodoItems(newTodoItems);
+    setTodoItems(todoItems.filter((item) => item._id !== deletedId));
+  };
+
+  const handleEditItem = async (id, newTask, newDate) => {
+    const updatedItem = await updateItemOnServer(id, newTask, newDate);
+    const updatedItems = todoItems.map((item) =>
+      item._id === id ? { ...updatedItem } : item
+    );
+    setTodoItems(updatedItems);
   };
 
   const sortedItems = [...todoItems].sort((a, b) => {
@@ -58,22 +59,20 @@ const [todoItems, setTodoItems] = useState([]);//todoItems is the state variable
     return a.completed ? 1 : -1;
   });
 
-   return (//what to render on the screen
-    <div className="min-h-screen bg-blue py-12 px-4">
-  <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden mb-8">
-      <div className="p-8">
-        <AppName />
-        <AddTodo onNewItem={handleNewItem} />
-        {todoItems.length === 0 && <WelcomeMessage></WelcomeMessage>}
+  return (
+    <div className="app">
+      <AppName />
+      <AddTodo onNewItem={handleNewItem} />
+      {sortedItems.length === 0 ? (
+        <WelcomeMessage />
+      ) : (
         <TodoItems
           todoItems={sortedItems}
           onDeleteClick={handleDeleteItem}
           onToggleComplete={handleToggleComplete}
-        ></TodoItems>
-      </div>
+          onEditItem={handleEditItem}
+        />
+      )}
     </div>
-  </div>
-</div>
   );
 }
